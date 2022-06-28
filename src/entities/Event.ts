@@ -14,6 +14,7 @@ export class Event {
   public description: string;
   public eventDate: string;
   public price: string;
+  public ticketsAvailable: number;
   public address: IAddress;
   public readonly createdAt: string;
   public updatedAt: string;
