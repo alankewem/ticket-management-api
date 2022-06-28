@@ -31,8 +31,9 @@ class UserRepository implements IUserRepository {
     }
   }
 
-  async save(user: User): Promise<void> {
+  async save(data: User): Promise<void> {
     try {
+      const user = new User(data)
       await this.User().create(user);
     } catch (error) {
       Promise.reject(error);
