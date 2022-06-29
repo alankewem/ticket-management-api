@@ -5,20 +5,20 @@ export type IRoles = "admin" | "event-manager" | "common";
 
 export class User {
   public readonly id: string;
-  public readonly role: IRoles;
+  public role?: IRoles;
   public name: string;
   public email: string;
   public password: string;
   public phone: string;
 
-  constructor(props: Omit<User, "id" | "role">, id?: string, role?: string) {
+  constructor(props: Omit<User, "id">, id?: string) {
     Object.assign(this, props);
 
     if (!id) {
       this.id = randomUUID();
     }
 
-    if (!role) {
+    if (!this.role) {
       this.role = "common";
     }
 
