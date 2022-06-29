@@ -13,7 +13,7 @@ export class Event {
   public title: string;
   public description: string;
   public eventDate: string;
-  public price: string;
+  public price: number;
   public ticketsAvailable: number;
   public address: IAddress;
   public readonly createdAt: string;
