@@ -19,15 +19,7 @@ schema.index({ title: "text" });
 const EventModel = model<Event>("Event", schema);
 
 class EventRepository implements IEventRepository {
-  async findById(id: string): Promise<Event> {
-    try {
-      return await EventModel.findOne({ id: id });
-    } catch (error) {
-      Promise.reject(error);
-    }
-  }
-
-  async findByTitle(text: string): Promise<Event[]> {
+  async findSimilarTitles(text: string): Promise<Event[]> {
     try {
       return await EventModel.find({
         $text: {
@@ -40,7 +32,25 @@ class EventRepository implements IEventRepository {
     } catch (error) {
       Promise.reject(error);
     }
+
   }
+
+  async findById(id: string): Promise<Event> {
+    try {
+      return await EventModel.findOne({ id: id });
+    } catch (error) {
+      Promise.reject(error);
+    }
+  }
+
+  async findByTitle(title: string): Promise<Event> {
+    try {
+      return await EventModel.findOne({ title: title });
+    } catch (error) {
+      Promise.reject(error);
+    }
+  }
+
   async save(data: Event): Promise<void> {
     try {
       const event = new Event(data);
