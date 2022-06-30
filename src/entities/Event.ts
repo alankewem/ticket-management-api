@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 
-type IAddress = {
+export type IAddress = {
   state: string;
   city: string;
   street: string;
