@@ -1,13 +1,5 @@
 import { randomUUID } from "crypto";
 
-export type IAddress = {
-  state: string;
-  city: string;
-  street: string;
-  number: string;
-  complement?: string;
-};
-
 export class Event {
   public readonly id: string;
   public title: string;
@@ -15,7 +7,7 @@ export class Event {
   public eventDate: string;
   public price: number;
   public ticketsAvailable: number;
-  public address: IAddress;
+  public address: string;
   public readonly createdAt: string;
   public updatedAt: string;
 
