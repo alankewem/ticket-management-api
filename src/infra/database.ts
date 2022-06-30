@@ -4,6 +4,7 @@ const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_HOSTNAME, MONGO_PORT, MONGO_DB } =
 
 export class MongoDB {
   public async connection() {
+    console.log(this.URL())
     return mongoose
       .connect(this.URL(), this.options)
       .then(() => {
