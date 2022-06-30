@@ -8,8 +8,8 @@ export class Event {
   public price: number;
   public ticketsAvailable: number;
   public address: string;
-  public readonly createdAt: string;
-  public updatedAt: string;
+  public readonly createdAt?: string;
+  public updatedAt?: string;
 
   constructor(
     props: Omit<Event, "id" | "createdAt" | "updatedAt">,
