@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import { MongoDB } from "./infra/database";
 import UserRoutes from "./routes/user.routes";
+import EventRoutes from "./routes/event.routes";
 
 class App {
   public server: express.Application;
@@ -27,6 +28,7 @@ class App {
 
   private router() {
     this.server.use("/user", UserRoutes);
+    this.server.use("/event", EventRoutes);
     this.server.use((req, res, next) => {
       res.status(404);
       res.send({
