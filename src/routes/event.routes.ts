@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { checkSchema, validationResult } from "express-validator";
+import { checkSchema, query, validationResult } from "express-validator";
 import { createEventController } from "../useCases/CreateEvent";
 import { searchEventsController } from "../useCases/SearchEvents";
 import { updateEventController } from "../useCases/UpdateEvent";
@@ -49,7 +49,7 @@ router.put(
     }
 );
 
-router.get("/", checkSchema({ title: { isString: true } })),
+router.get("/", query("title").isString(),
     async (request: Request, response: Response, next: NextFunction) => {
         const errors = validationResult(request);
 
@@ -59,5 +59,5 @@ router.get("/", checkSchema({ title: { isString: true } })),
 
         return await searchEventsController.handle(request, response, next);
     }
-
+)
 export default router;
