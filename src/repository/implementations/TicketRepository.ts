@@ -1,21 +1,19 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import { Ticket } from "../../entities/Ticket";
 import { ITicketRepository } from "../ITicketRepository";
 
 const schema = new Schema<Ticket>({
-  id: { type: String, required: true },
-  event: { type: String, ref: "Event", required: true },
-  owner: { type: String, ref: "User", required: true },
-  createdAt: { type: String, required: true },
-  updatedAt: { type: String, required: true },
+  _id: { type: Schema.Types.ObjectId, required: true },
+  event: { type: Schema.Types.ObjectId, ref: "Event", required: true },
+  owner: { type: Schema.Types.ObjectId, ref: "User", required: true }
 });
 
 const TicketModel = model<Ticket>("Ticket", schema);
 
 class TicketRepository implements ITicketRepository {
-  async findById(id: string): Promise<Ticket> {
+  async findById(id: Types.ObjectId): Promise<Ticket> {
     try {
-      return await TicketModel.findOne({ id: id });
+      return await TicketModel.findById(id).populate("event").populate("owner")
     } catch (error) {
       Promise.reject(error);
     }
@@ -23,16 +21,15 @@ class TicketRepository implements ITicketRepository {
 
   async findByEvent(eventId: string): Promise<Ticket[]> {
     try {
-      return await TicketModel.find({ event: eventId });
+      return await TicketModel.find({ event: eventId })
     } catch (error) {
       Promise.reject(error);
     }
   }
 
-  async save(data: Ticket): Promise<void> {
+  async save(data: Ticket) {
     try {
-      const ticket = new Ticket(data);
-      await TicketModel.create(ticket);
+      return await TicketModel.create(data);
     } catch (error) {
       Promise.reject(error);
     }
