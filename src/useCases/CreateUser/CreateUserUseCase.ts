@@ -3,7 +3,7 @@ import { IUserRepository } from "../../repository/IUserRepository";
 import { ICreateUserDTO } from "./CreateUserDTO";
 
 export class CreateUserUseCase {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(private userRepository: IUserRepository) { }
 
   async execute(data: ICreateUserDTO) {
     try {
@@ -11,6 +11,10 @@ export class CreateUserUseCase {
 
       if (userAlreadyExists) {
         return Promise.reject("User already exist");
+      }
+
+      if (data.role && data.role !== "common") {
+        return Promise.reject("Unauthorized")
       }
 
       const user = new User(data);
