@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import { Event } from "../../entities/Event";
 import { IEventRepository } from "../IEventRepository";
 
@@ -19,6 +19,10 @@ const EventModel = model<Event>("Event", schema);
 EventModel.createIndexes()
 
 class EventRepository implements IEventRepository {
+  async findById(eventId: Types.ObjectId): Promise<Event> {
+    return await EventModel.findById(eventId)
+  }
+  
   async excludeById(eventId: string): Promise<void> {
     return await EventModel.findOneAndRemove({ id: eventId })
   }
