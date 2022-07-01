@@ -1,3 +1,5 @@
+import { Types } from "mongoose"
+
 export interface IUpdateEventDTO {
     title: string
     description: string
@@ -5,5 +7,5 @@ export interface IUpdateEventDTO {
     price: number
     ticketsAvailable: number
     address: string
-    id: string
+    _id: Types.ObjectId
 }

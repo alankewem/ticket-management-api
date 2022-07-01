@@ -5,11 +5,11 @@ export class UpdateEventController {
     constructor(private updateEventUseCase: UpdateEventUseCase) { }
 
     async handle(req: Request, res: Response, next: NextFunction): Promise<Response> {
-        const { title, description, eventDate, price, ticketsAvailable, address, id, createdAt, } = req.body;
+        const { title, description, eventDate, price, ticketsAvailable, address, _id } = req.body;
 
         try {
             const event = await this.updateEventUseCase.execute({
-                title, description, eventDate, price, ticketsAvailable, address, id
+                title, description, eventDate, price, ticketsAvailable, address, _id
             }).catch(error => {
                 res.status(400).json({ error: error })
             })
