@@ -21,6 +21,6 @@ export class LoginUserUseCase {
 
         const jwt = sign({ user: user.role }, process.env.JWT_SECRET, { expiresIn: "6 hours" })
 
-        return jwt
+        return { jwt: jwt, userId: user._id }
     }
 }
