@@ -16,7 +16,9 @@ const schema = new Schema<Event>({
 
 schema.index({ title: "text" });
 
+
 const EventModel = model<Event>("Event", schema);
+EventModel.createIndexes()
 
 class EventRepository implements IEventRepository {
   async excludeById(eventId: string): Promise<void> {
@@ -33,9 +35,7 @@ class EventRepository implements IEventRepository {
       return await EventModel.find({
         $text: {
           $search: text,
-          $caseSensitive: false,
-          $diacriticSensitive: false,
-          $language: "pt",
+          $caseSensitive: false
         },
       });
     } catch (error) {
