@@ -4,8 +4,8 @@ import "dotenv/config";
 import { MongoDB } from "./infra/database";
 import UserRoutes from "./routes/user.routes";
 import EventRoutes from "./routes/event.routes";
+import TicketRoutes from "./routes/ticket.routes";
 import { createUserUseCase } from "./useCases/CreateUser";
-import { User } from "./entities/User";
 import { ICreateUserDTO } from "./useCases/CreateUser/CreateUserDTO";
 
 class App {
@@ -36,6 +36,7 @@ class App {
   private router() {
     this.server.use("/user", UserRoutes);
     this.server.use("/event", EventRoutes);
+    this.server.use("/ticket", TicketRoutes);
     this.server.use((req, res, next) => {
       res.status(404);
       res.send({
