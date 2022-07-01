@@ -15,8 +15,8 @@ export class CreateEventUseCase {
 
             const event = new Event(data);
 
-            await this.eventRepository.save(event);
-            return Promise.resolve(event);
+            const createdEvent = await this.eventRepository.save(event);
+            return Promise.resolve(createdEvent);
         } catch (error) {
             return Promise.reject(error);
         }
