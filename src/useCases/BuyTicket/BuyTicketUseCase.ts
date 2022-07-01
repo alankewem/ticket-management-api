@@ -9,8 +9,8 @@ export class BuyTicketUseCase {
         try {
             const ticket = new Ticket(data)
 
-            await this.ticketRepository.save(ticket);
-            const populatedTicket = await this.ticketRepository.findById(ticket.id)
+            const createdTicket = await this.ticketRepository.save(ticket);
+            const populatedTicket = await this.ticketRepository.findById(createdTicket._id)
             return Promise.resolve(populatedTicket);
         } catch (error) {
             return Promise.reject(error);
