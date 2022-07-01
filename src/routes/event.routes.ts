@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { checkSchema, query, validationResult } from "express-validator";
+import { checkSchema, param, query, validationResult } from "express-validator";
 import { createEventController } from "../useCases/CreateEvent";
+import { excludeEventController } from "../useCases/ExcludeEvent";
 import { searchEventsController } from "../useCases/SearchEvents";
 import { updateEventController } from "../useCases/UpdateEvent";
 
@@ -49,7 +50,7 @@ router.put(
     }
 );
 
-router.get("/", query("title").isString(),
+router.get("/", query("title").isString().notEmpty(),
     async (request: Request, response: Response, next: NextFunction) => {
         const errors = validationResult(request);
 
@@ -60,4 +61,15 @@ router.get("/", query("title").isString(),
         return await searchEventsController.handle(request, response, next);
     }
 )
+
+router.delete("/:eventId", param("eventId").isString().notEmpty(),
+    async (request: Request, response: Response, next: NextFunction) => {
+        const errors = validationResult(request);
+
+        if (!errors.isEmpty()) {
+            return response.status(400).json({ errors: errors.array() });
+        }
+
+        return await excludeEventController.handle(request, response, next);
+    })
 export default router;

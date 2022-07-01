@@ -19,6 +19,10 @@ schema.index({ title: "text" });
 const EventModel = model<Event>("Event", schema);
 
 class EventRepository implements IEventRepository {
+  async excludeById(eventId: string): Promise<void> {
+    return await EventModel.findOneAndRemove({ id: eventId })
+  }
+
   async findByIdAndUpdate(event: Event): Promise<Event> {
     const updatedEvent = await EventModel.findOneAndUpdate({ id: event.id }, { $set: { ...event, updatedAt: new Date().toUTCString() } }, { new: true })
     return updatedEvent
