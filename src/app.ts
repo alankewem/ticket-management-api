@@ -21,10 +21,6 @@ class App {
     console.log("connecting...");
     const mongodb = new MongoDB();
     await mongodb.connection();
-
-    const admin: ICreateUserDTO = { email: 'kewemcg@gmail.com', name: "Alan Kewem", phone: "97981095945", password: "21pilots21.", role: "admin" }
-
-    await createUserUseCase.execute(admin)
   }
 
   private middleware() {
