@@ -6,4 +6,5 @@ export interface IEventRepository {
   findSimilarTitles(text: string): Promise<Event[]>
   save(event: Event): Promise<void>;
   findByIdAndUpdate(event: Event): Promise<Event>
+  excludeById(eventId: string): Promise<void>
 }
