@@ -1,5 +1,5 @@
-import { Event } from "../../entities/Event";
 import { IEventRepository } from "../../repository/IEventRepository";
+import { IUpdateEventDTO } from "./UpdateEventDTO";
 
 export class UpdateEventUseCase {
     constructor(private eventRepository: IEventRepository) { }

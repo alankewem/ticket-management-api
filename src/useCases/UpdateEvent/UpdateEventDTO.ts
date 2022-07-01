@@ -1,4 +1,4 @@
-interface IUpdateEventDTO {
+export interface IUpdateEventDTO {
     title: string
     description: string
     eventDate: string
