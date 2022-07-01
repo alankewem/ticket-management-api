@@ -62,8 +62,7 @@ class EventRepository implements IEventRepository {
 
   async save(data: Event): Promise<void> {
     try {
-      const event = new Event(data);
-      await EventModel.create(event);
+      await EventModel.create(data);
     } catch (error) {
       Promise.reject(error);
     }
