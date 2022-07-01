@@ -19,7 +19,7 @@ class TicketRepository implements ITicketRepository {
     }
   }
 
-  async findByEvent(eventId: string): Promise<Ticket[]> {
+  async findByEvent(eventId: Types.ObjectId): Promise<Ticket[]> {
     try {
       return await TicketModel.find({ event: eventId })
     } catch (error) {
