@@ -4,6 +4,7 @@ import { IUserRepository } from "../IUserRepository";
 
 const schema = new Schema<User>(
   {
+    _id: { type: Schema.Types.ObjectId, required: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
@@ -12,7 +13,6 @@ const schema = new Schema<User>(
       enum: ["admin", "event-manager", "common"],
       required: true,
     },
-    id: { type: String, required: true },
     phone: { type: String, required: true },
   },
   { timestamps: true }

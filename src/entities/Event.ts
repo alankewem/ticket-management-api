@@ -1,34 +1,22 @@
 import { randomUUID } from "crypto";
+import mongoose, { Types } from "mongoose";
 
 export class Event {
-  public readonly id: string;
+  public readonly _id?: Types.ObjectId;
   public title: string;
   public description: string;
   public eventDate: string;
   public price: number;
   public ticketsAvailable: number;
   public address: string;
-  public readonly createdAt?: string;
-  public updatedAt?: string;
 
   constructor(
-    props: Omit<Event, "id" | "createdAt" | "updatedAt">,
-    id?: string,
-    createdAt?: string
+    props: Omit<Event, "_id">, _id?: string
   ) {
     Object.assign(this, props);
 
-    if (!id) {
-      this.id = randomUUID();
-    }
-
-    if (!createdAt) {
-      this.createdAt = new Date().toUTCString();
-      this.updatedAt = new Date().toUTCString();
-    }
-
-    if (createdAt) {
-      this.updatedAt = new Date().toUTCString();
+    if (!_id) {
+      this._id = new mongoose.Types.ObjectId()
     }
   }
 }

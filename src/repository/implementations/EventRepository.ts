@@ -3,16 +3,14 @@ import { Event } from "../../entities/Event";
 import { IEventRepository } from "../IEventRepository";
 
 const schema = new Schema<Event>({
-  id: { type: String, required: true },
+  _id: { type: Schema.Types.ObjectId, required: true },
   title: { type: String, required: true },
   description: { type: String, required: false },
   eventDate: { type: String, required: true },
   price: { type: Number, required: true },
   ticketsAvailable: { type: Number, required: true },
-  address: { type: String, required: true },
-  createdAt: { type: String, required: true },
-  updatedAt: { type: String, required: true },
-});
+  address: { type: String, required: true }
+}, { timestamps: true });
 
 schema.index({ title: "text" });
 
@@ -26,7 +24,7 @@ class EventRepository implements IEventRepository {
   }
 
   async findByIdAndUpdate(event: Event): Promise<Event> {
-    const updatedEvent = await EventModel.findOneAndUpdate({ id: event.id }, { $set: { ...event, updatedAt: new Date().toUTCString() } }, { new: true })
+    const updatedEvent = await EventModel.findByIdAndUpdate(event._id, { $set: { ...event, updatedAt: new Date().toISOString() } }, { new: true })
     return updatedEvent
   }
 
@@ -44,14 +42,6 @@ class EventRepository implements IEventRepository {
 
   }
 
-  async findById(id: string): Promise<Event> {
-    try {
-      return await EventModel.findOne({ id: id });
-    } catch (error) {
-      Promise.reject(error);
-    }
-  }
-
   async findByTitle(title: string): Promise<Event> {
     try {
       return await EventModel.findOne({ title: title });
@@ -60,9 +50,9 @@ class EventRepository implements IEventRepository {
     }
   }
 
-  async save(data: Event): Promise<void> {
+  async save(data: Event): Promise<Event> {
     try {
-      await EventModel.create(data);
+      return await EventModel.create(data);
     } catch (error) {
       Promise.reject(error);
     }
