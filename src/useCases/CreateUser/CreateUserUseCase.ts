@@ -13,10 +13,6 @@ export class CreateUserUseCase {
         return Promise.reject("User already exist");
       }
 
-      if (data.role && data.role !== "common") {
-        return Promise.reject("Unauthorized")
-      }
-
       const user = new User(data);
 
       await this.userRepository.save(user);
