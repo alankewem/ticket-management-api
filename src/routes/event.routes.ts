@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { checkSchema, param, query, validationResult } from "express-validator";
+import { authJWT } from "../middleware/auth";
 import { createEventController } from "../useCases/CreateEvent";
 import { excludeEventController } from "../useCases/ExcludeEvent";
 import { searchEventsController } from "../useCases/SearchEvents";
@@ -9,6 +10,7 @@ const router = Router();
 
 router.post(
     "/",
+    authJWT(["admin", "event-manager"]),
     checkSchema({
         title: { isString: true },
         description: { isString: true },
@@ -30,8 +32,9 @@ router.post(
 
 router.put(
     "/",
+    authJWT(["admin", "event-manager"]),
     checkSchema({
-        id: { isString: true },
+        _id: { isString: true },
         title: { isString: true },
         description: { isString: true },
         eventDate: { isString: true },
@@ -62,7 +65,9 @@ router.get("/", query("title").isString().notEmpty(),
     }
 )
 
-router.delete("/:eventId", param("eventId").isString().notEmpty(),
+router.delete("/:eventId",
+    authJWT(["admin", "event-manager"]),
+    param("eventId").isString().notEmpty(),
     async (request: Request, response: Response, next: NextFunction) => {
         const errors = validationResult(request);
 

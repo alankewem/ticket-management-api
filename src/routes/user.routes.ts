@@ -8,7 +8,6 @@ const router = Router();
 
 router.post(
   "/",
-  authJWT,
   checkSchema({
     name: { isString: true, notEmpty: true },
     email: { isEmail: true, normalizeEmail: true, notEmpty: true },
@@ -22,7 +21,28 @@ router.post(
       return response.status(400).json({ errors: errors.array() });
     }
 
-    return await createUserController.handle(request, response, next);
+    return await createUserController.common(request, response, next);
+  }
+);
+
+router.post(
+  "/manager",
+  authJWT(["admin"]),
+  checkSchema({
+    name: { isString: true, notEmpty: true },
+    email: { isEmail: true, normalizeEmail: true, notEmpty: true },
+    password: { isString: true, notEmpty: true },
+    phone: { isString: true, notEmpty: true },
+    role: { isString: true }
+  }),
+  async (request: Request, response: Response, next: NextFunction) => {
+    const errors = validationResult(request);
+
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
+    return await createUserController.admin(request, response, next);
   }
 );
 
