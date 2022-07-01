@@ -8,7 +8,7 @@ export class UpdateEventUseCase {
         try {
             const eventAlreadyExists = await this.eventRepository.findByTitle(data.title)
 
-            if (eventAlreadyExists && eventAlreadyExists._id !== data._id) {
+            if (eventAlreadyExists && eventAlreadyExists._id.toString() != data._id.toString()) {
                 return Promise.reject("Event title already exists");
             }
 
