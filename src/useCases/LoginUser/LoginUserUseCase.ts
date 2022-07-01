@@ -15,13 +15,11 @@ export class LoginUserUseCase {
 
         const correctPassword = await compare(data.password, user.password)
 
-        console.log(correctPassword, data.password, user.password)
-
         if (!correctPassword) {
             return Promise.reject("uncorrect password")
         }
 
-        const jwt = sign({ user: user.id }, process.env.JWT_SECRET, { expiresIn: "6 hours" })
+        const jwt = sign({ user: user.role }, process.env.JWT_SECRET, { expiresIn: "6 hours" })
 
         return jwt
     }
